@@ -126,7 +126,7 @@ elif st.session_state.game_state == 'playing':
         
         if not st.session_state.show_role:
             st.write("Pulsa para revelar tu rol.")
-            if st.button("👁️ Ver mi rol", use_container_width=True, type="primary"):
+            if st.button("👁️", use_container_width=True, type="primary"):
                 st.session_state.show_role = True
                 st.rerun()
         else:
@@ -164,7 +164,7 @@ elif st.session_state.game_state == 'playing':
 # PANTALLA C: FINALIZADO
 elif st.session_state.game_state == 'finished':
     st.balloons()
-    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">🕵️‍♀️ La ImpODStora</h1><span class="emoji-subtitulo">👧</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La impODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
     st.success("### 📣 ¡Debate abierto!")
     
     if st.button("🔄 Nueva ronda", use_container_width=True, type="primary"):
