@@ -296,13 +296,13 @@ st.markdown("<h1 class='main-header'>LA IMPODSTORA</h1>", unsafe_allow_html=True
 
 # --- SETUP ---
 if st.session_state.stage == 'setup':
-    st.markdown("<p class='subtitle'>Add your crew members to begin the mission and save the planet.</p>", unsafe_allow_html=True)
+    st.markdown("<p class='subtitle'>Añade a las jugadoras para comenzar la misión y salvar el planeta.</p>", unsafe_allow_html=True)
     
     # Formulario para agregar jugadores
-    st.markdown("### 🆕 NEW AGENT")
+    st.markdown("### 🆕 NUEVA AGENTE")
     col1, col2 = st.columns([4, 1])
     with col1:
-        new_name = st.text_input("", placeholder="Enter crew name...", label_visibility="collapsed")
+        new_name = st.text_input("", placeholder="Escribe el nombre...", label_visibility="collapsed")
     with col2:
         if st.button("➕", key="add_btn"):
             if new_name and new_name not in st.session_state.players:
@@ -314,7 +314,7 @@ if st.session_state.stage == 'setup':
 
     # Lista de jugadores
     if st.session_state.players:
-        st.markdown(f"### Current Crew <span class='counter-badge'>{len(st.session_state.players)}/10 AGENTS</span>", unsafe_allow_html=True)
+        st.markdown(f"### Tripulación Actual <span class='counter-badge'>{len(st.session_state.players)}/10 AGENTES</span>", unsafe_allow_html=True)
         
         cols = st.columns(3)
         for idx, player in enumerate(st.session_state.players):
