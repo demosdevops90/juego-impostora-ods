@@ -246,4 +246,6 @@ elif st.session_state.stage == 'reveal':
             iniciar_partida()
             st.rerun()
     with col2:
-        if st.button("
+        if st.button("✏️ Cambiar jugadores"):
+            st.session_state.stage = 'setup'
+            st.rerun()
