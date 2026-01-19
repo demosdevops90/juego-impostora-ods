@@ -109,7 +109,7 @@ elif st.session_state.game_state == 'playing':
     st.progress((st.session_state.current_idx + 1) / len(st.session_state.players))
     
     with st.container(border=True):
-#        st.markdown(f"<h2 style='text-align: center; color: #FF4B4B;'>{player}</h2>", unsafe_allow_html=True)
+        st.markdown(f"<h2 style='text-align: center; color: #FF4B4B;'>{player}</h2>", unsafe_allow_html=True)
 #        st.write("Revisa el objetivo y, porfa, pasa el móvil.")
         
         if not st.session_state.show_role:
