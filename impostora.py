@@ -164,7 +164,7 @@ elif st.session_state.game_state == 'playing':
 # PANTALLA C: FINALIZADO
 elif st.session_state.game_state == 'finished':
     st.balloons()
-    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">🕵️‍♀️ La ImpODStora</h1><span class="emoji-subtitulo">👧</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La ImpODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
     st.success("### 📣 ¡Debate abierto!")
     
     if st.button("🔄 Nueva ronda", use_container_width=True, type="primary"):
