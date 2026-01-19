@@ -27,7 +27,7 @@ ODS_LIST = [
 # 2. CONFIGURACIÓN DE PÁGINA
 st.set_page_config(page_title="La impODStora", page_icon="🕵️‍♀️", layout="centered")
 
-# CSS para centrar, forzar una línea y estilo del subtítulo
+# CSS para centrar y estilo
 st.markdown("""
     <style>
         .block-container { padding-top: 1.5rem; }
@@ -46,6 +46,14 @@ st.markdown("""
             margin-top: -10px;
             display: block;
             text-align: center;
+        }
+        .revelacion-card {
+            border: 2px dashed #FF4B4B;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            background-color: #FFF5F5;
+            margin-bottom: 20px;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -91,7 +99,6 @@ with st.sidebar:
 # PANTALLA A: CONFIGURACIÓN
 if st.session_state.game_state == 'setup':
     st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La impODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
-    
     st.subheader("Añadir jugadoras")
     with st.form("player_form", clear_on_submit=True):
         name = st.text_input("Nombre:")
@@ -161,11 +168,29 @@ elif st.session_state.game_state == 'playing':
                     st.session_state.game_state = 'finished'
                     st.rerun()
 
-# PANTALLA C: FINALIZADO
+# PANTALLA C: FINALIZADO (REVELACIÓN)
 elif st.session_state.game_state == 'finished':
     st.balloons()
     st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La impODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
-    st.success("### 📣 ¡Debate abierto!")
+    
+    # --- SECCIÓN DE REVELACIÓN ---
+    impostora_name = st.session_state.players[st.session_state.impostor_idx]
+    ods_jugada = st.session_state.selected_ods
+    
+    st.markdown(f"""
+    <div class="revelacion-card">
+        <h3 style='color: #FF4B4B; margin-bottom: 5px;'>🕵️‍♀️ La Impostora era:</h3>
+        <h1 style='margin: 0;'>{impostora_name}</h1>
+        <hr style='border-color: #FF4B4B; opacity: 0.3;'>
+        <p style='margin-bottom: 0;'><b>Se jugaba con:</b> {ods_jugada['nombre']}</p>
+        <p style='margin-top: 0;'><b>Palabra clave:</b> {ods_jugada['palabra']}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.success("### 📣 ¡Debate final!")
+    st.write("¿La habéis descubierto o ha logrado engañaros?")
+    
+    st.divider()
     
     if st.button("🔄 Nueva ronda", use_container_width=True, type="primary"):
         start_new_round()
