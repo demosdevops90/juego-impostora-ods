@@ -61,7 +61,7 @@ st.title("🕵️‍♀️ La ImpODStora")
 # BARRA LATERAL (QR e INFO)
 with st.sidebar:
     st.header("Opciones")
-    if st.button("⚠️ Reiniciar TODO (Borrar nombres)"):
+    if st.button("⚠️ Reiniciar TODO (borrar nombres)"):
         hard_reset()
         st.rerun()
     
@@ -94,7 +94,7 @@ if st.session_state.game_state == 'setup':
                 st.rerun()
     
     st.divider()
-    if st.button("🚀 ¡COMENZAR PARTIDA!", use_container_width=True, type="primary", 
+    if st.button("🚀 ¡COMENZAR LA PARTIDA!", use_container_width=True, type="primary", 
                  disabled=len(st.session_state.players) < 3):
         start_new_round()
         st.rerun()
