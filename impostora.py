@@ -25,7 +25,7 @@ ODS_LIST = [
 ]
 
 # 2. CONFIGURACIÓN DE PÁGINA
-st.set_page_config(page_title="La Impostora", page_icon="🕵️‍♀️", layout="centered")
+st.set_page_config(page_title="La ImpODStora", page_icon="🕵️‍♀️", layout="centered")
 
 # 3. INICIALIZACIÓN DEL ESTADO (Session State)
 if 'game_state' not in st.session_state:
@@ -56,7 +56,7 @@ def remove_player(name):
     st.session_state.players.remove(name)
 
 # --- INTERFAZ DE USUARIO ---
-st.title("🕵️‍♀️ La Impostora - ODS")
+st.title("🕵️‍♀️ La ImpODStora")
 
 # BARRA LATERAL (QR e INFO)
 with st.sidebar:
