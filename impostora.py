@@ -90,7 +90,7 @@ with st.sidebar:
 
 # PANTALLA A: CONFIGURACIÓN
 if st.session_state.game_state == 'setup':
-    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">🕵️‍♀️ La ImpODStora</h1><span class="emoji-subtitulo">👧</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La ImpODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
     
     st.subheader("Añadir jugadoras")
     with st.form("player_form", clear_on_submit=True):
