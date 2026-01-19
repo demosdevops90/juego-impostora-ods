@@ -33,7 +33,6 @@ st.markdown("""
         .titulo-container { text-align: center; margin-bottom: 0.5rem; }
         .titulo-centrado { white-space: nowrap; font-size: 2.2rem; font-weight: bold; margin: 0; }
         .emoji-subtitulo { font-size: 3rem; margin-top: -10px; display: block; text-align: center; }
-        /* Estilos de las tarjetas de rol */
         .card-impostora {
             border: 4px solid #FF4B4B; padding: 20px; border-radius: 15px;
             text-align: center; background-color: #FFF5F5;
@@ -55,6 +54,7 @@ if 'game_state' not in st.session_state:
 
 def start_new_round():
     if len(st.session_state.players) >= 3:
+        # IMPORTANTE: Mezclar primero, luego elegir el índice
         random.shuffle(st.session_state.players)
         st.session_state.impostor_idx = random.randint(0, len(st.session_state.players) - 1)
         st.session_state.selected_ods = random.choice(ODS_LIST)
@@ -83,7 +83,7 @@ if st.session_state.game_state == 'setup':
     with st.form("player_form", clear_on_submit=True):
         name = st.text_input("Nombre:")
         if st.form_submit_button("Añadir ➕") and name:
-            if name.strip() not in st.session_state.players:
+            if name.strip() and name.strip() not in st.session_state.players:
                 st.session_state.players.append(name.strip())
                 st.rerun()
 
@@ -101,17 +101,17 @@ if st.session_state.game_state == 'setup':
         start_new_round()
         st.rerun()
 
-# PANTALLA B: EN JUEGO (REVELACIÓN INDIVIDUAL)
+# PANTALLA B: EN JUEGO
 elif st.session_state.game_state == 'playing':
     player = st.session_state.players[st.session_state.current_idx]
-    st.caption(f"Jugadora {st.session_state.current_idx + 1} de {len(st.session_state.players)}")
+    st.caption(f"Fase de roles: {st.session_state.current_idx + 1} de {len(st.session_state.players)}")
     st.progress((st.session_state.current_idx + 1) / len(st.session_state.players))
     
     with st.container(border=True):
         st.markdown(f"<h1 style='text-align: center; margin-top: -15px;'>{player}</h1>", unsafe_allow_html=True)
         
         if not st.session_state.show_role:
-            st.write("Pulsa para revelar tu rol.")
+            st.write("Pulsa para revelar tu rol en secreto.")
             if st.button("👁️ Ver mi rol", use_container_width=True, type="primary"):
                 st.session_state.show_role = True
                 st.rerun()
@@ -131,7 +131,7 @@ elif st.session_state.game_state == 'playing':
                     <hr style='margin: 10px 0;'>
                     <p style='color: #333; font-size: 1.1em; font-weight: bold;'>{ods['nombre']}</p>
                     <div style='background-color: white; padding: 10px; border-radius: 10px; border: 1px solid #ddd;'>
-                        <small style='color: #666;'>Ejemplo:</small><br>
+                        <small style='color: #666;'>Tu palabra:</small><br>
                         <b style='color: #000; font-size: 1.3em;'>{ods['palabra']}</b>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ elif st.session_state.game_state == 'playing':
                     st.session_state.game_state = 'debate'
                 st.rerun()
 
-# PANTALLA C: DEBATE (OCULTO)
+# PANTALLA C: DEBATE
 elif st.session_state.game_state == 'debate':
     st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">🗣️ ¡A Debatir!</h1></div>', unsafe_allow_html=True)
     st.info("Todas han visto su rol. Hablad y tratad de encontrar a la impostora.")
@@ -156,24 +156,26 @@ elif st.session_state.game_state == 'debate':
         st.session_state.game_state = 'reveal'
         st.rerun()
 
-# PANTALLA D: REVELACIÓN FINAL (MOSTRANDO IMPOSTORA Y TEMA)
+# PANTALLA D: REVELACIÓN FINAL (¡AHORA SÍ CON NOMBRE!)
 elif st.session_state.game_state == 'reveal':
     st.balloons()
     st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La impODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
     
-    impostora_name = st.session_state.players[st.session_state.impostor_idx]
+    # Aquí obtenemos el nombre real de la impostora usando el índice guardado
+    nombre_impostora = st.session_state.players[st.session_state.impostor_idx]
     ods_jugada = st.session_state.selected_ods
     
     st.markdown(f"""
     <div class="card-impostora" style="border-style: dashed;">
         <h2 style='color: #FF4B4B;'>🕵️‍♀️ La Impostora era:</h2>
-        <h1 style='font-size: 3rem; margin-bottom: 10px;'>{impostora_name}</h1>
+        <h1 style='font-size: 3rem; margin: 10px 0;'>{nombre_impostora}</h1>
         <hr style='opacity: 0.3;'>
-        <p style='font-size: 1.2em;'><b>Tema:</b> {ods_jugada['nombre']}</p>
-        <p><b>Palabra clave:</b> {ods_jugada['palabra']}</p>
+        <p style='font-size: 1.2em; margin: 5px 0;'><b>Tema:</b> {ods_jugada['nombre']}</p>
+        <p style='margin: 0;'><b>Palabra:</b> {ods_jugada['palabra']}</p>
     </div>
     """, unsafe_allow_html=True)
     
+    st.write("")
     if st.button("🔄 Nueva ronda", use_container_width=True, type="primary"):
         start_new_round()
         st.rerun()
