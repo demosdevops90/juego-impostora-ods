@@ -25,7 +25,7 @@ ODS_LIST = [
 ]
 
 # 2. CONFIGURACIÓN DE PÁGINA
-st.set_page_config(page_title="La Impostora ODS", page_icon="🕵️‍♀️", layout="centered")
+st.set_page_config(page_title="La Impostora", page_icon="🕵️‍♀️", layout="centered")
 
 # 3. INICIALIZACIÓN DEL ESTADO (Session State)
 if 'game_state' not in st.session_state:
@@ -94,7 +94,7 @@ if st.session_state.game_state == 'setup':
                 st.rerun()
     
     st.divider()
-    if st.button("🚀 ¡EMPEZAR PARTIDA!", use_container_width=True, type="primary", 
+    if st.button("🚀 ¡COMENZAR PARTIDA!", use_container_width=True, type="primary", 
                  disabled=len(st.session_state.players) < 3):
         start_new_round()
         st.rerun()
@@ -110,7 +110,7 @@ elif st.session_state.game_state == 'playing':
     
     with st.container(border=True):
         st.markdown(f"<h2 style='text-align: center; color: #FF4B4B;'>{player}</h2>", unsafe_allow_html=True)
-        st.write("Pasa el móvil a la persona indicada arriba.")
+        st.write("Revisa el objetivo y, porfa, pasa el móvil.")
         
         if not st.session_state.show_role:
             if st.button("👁️ Ver mi rol", use_container_width=True, type="primary"):
