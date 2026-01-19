@@ -150,8 +150,8 @@ elif st.session_state.game_state == 'playing':
 # PANTALLA C: FINALIZADO
 elif st.session_state.game_state == 'finished':
     st.balloons()
-    st.success("### 📣 ¡Todos han visto su rol!")
-    st.write("Empezad el debate. Recordad que cada uno debe decir una palabra relacionada con la ODS (la impostora tendrá que improvisar).")
+    st.success("### 📣 ¡Todas han visto su rol!")
+    st.write("Empezad el debate. Recordad que cada una debe decir una palabra relacionada con la ODS (la impostora tendrá que improvisar).")
     
     if st.button("🔄 Jugar otra ronda (Mismas jugadoras)", use_container_width=True, type="primary"):
         start_new_round()
