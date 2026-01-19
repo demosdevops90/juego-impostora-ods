@@ -25,7 +25,7 @@ ODS_LIST = [
 ]
 
 # 2. CONFIGURACIÓN DE PÁGINA
-st.set_page_config(page_title="La ImpODStora", page_icon="🕵️‍♀️", layout="centered")
+st.set_page_config(page_title="La impODStora", page_icon="🕵️‍♀️", layout="centered")
 
 # CSS para centrar, forzar una línea y estilo del subtítulo
 st.markdown("""
@@ -90,7 +90,7 @@ with st.sidebar:
 
 # PANTALLA A: CONFIGURACIÓN
 if st.session_state.game_state == 'setup':
-    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La ImpODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La impODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
     
     st.subheader("Añadir jugadoras")
     with st.form("player_form", clear_on_submit=True):
@@ -110,7 +110,7 @@ if st.session_state.game_state == 'setup':
                 st.rerun()
     
     st.divider()
-    if st.button("🚀 ¡COMENZAR!", use_container_width=True, type="primary", 
+    if st.button("🚀 ¡COMENZAR A JUGAR!", use_container_width=True, type="primary", 
                  disabled=len(st.session_state.players) < 3):
         start_new_round()
         st.rerun()
@@ -164,7 +164,7 @@ elif st.session_state.game_state == 'playing':
 # PANTALLA C: FINALIZADO
 elif st.session_state.game_state == 'finished':
     st.balloons()
-    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La ImpODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">La impODStora</h1><span class="emoji-subtitulo">🕵️‍♀️</span></div>', unsafe_allow_html=True)
     st.success("### 📣 ¡Debate abierto!")
     
     if st.button("🔄 Nueva ronda", use_container_width=True, type="primary"):
