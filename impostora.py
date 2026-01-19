@@ -132,7 +132,7 @@ elif st.session_state.game_state == 'playing':
                     <hr>
                     <p style='color: #333; font-size: 1.2em;'><b>ODS #{ods['id']}:</b> {ods['nombre']}</p>
                     <p style='background-color: white; padding: 10px; border-radius: 10px; color: #555;'>
-                        Palabra clave: <b style='color: #000;'>{ods['palabra']}</b>
+                        Ejemplo: <b style='color: #000;'>{ods['palabra']}</b>
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
