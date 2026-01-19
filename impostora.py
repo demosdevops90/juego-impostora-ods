@@ -27,12 +27,25 @@ ODS_LIST = [
 # 2. CONFIGURACIÓN DE PÁGINA
 st.set_page_config(page_title="La ImpODStora", page_icon="🕵️‍♀️", layout="centered")
 
-# Inyectar CSS para eliminar el espacio superior
+# CSS para centrar, forzar una línea y estilo del subtítulo
 st.markdown("""
     <style>
-        .block-container {
-            padding-top: 1rem;
-            padding-bottom: 0rem;
+        .block-container { padding-top: 1.5rem; }
+        .titulo-container {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .titulo-centrado {
+            white-space: nowrap;
+            font-size: 2.2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        .emoji-subtitulo {
+            font-size: 3rem;
+            margin-top: -10px;
+            display: block;
+            text-align: center;
         }
     </style>
     """, unsafe_allow_html=True)
@@ -61,10 +74,7 @@ def hard_reset():
     st.session_state.players = []
     st.session_state.current_idx = 0
 
-def remove_player(name):
-    st.session_state.players.remove(name)
-
-# --- BARRA LATERAL (Solo Opciones y QR) ---
+# --- BARRA LATERAL ---
 with st.sidebar:
     st.header("Menú")
     if st.button("⚠️ Reiniciar TODO"):
@@ -80,12 +90,13 @@ with st.sidebar:
 
 # PANTALLA A: CONFIGURACIÓN
 if st.session_state.game_state == 'setup':
-    st.title("🕵️‍♀️ La ImpODStora")
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">🕵️‍♀️ La ImpODStora</h1><span class="emoji-subtitulo">👧</span></div>', unsafe_allow_html=True)
+    
     st.subheader("Añadir jugadoras")
     with st.form("player_form", clear_on_submit=True):
         name = st.text_input("Nombre:")
         if st.form_submit_button("Añadir ➕") and name:
-            if name.strip() not in st.session_state.players:
+            if name.strip() and name.strip() not in st.session_state.players:
                 st.session_state.players.append(name.strip())
                 st.rerun()
 
@@ -95,7 +106,7 @@ if st.session_state.game_state == 'setup':
             col1, col2 = st.columns([0.8, 0.2])
             col1.text(f"👤 {p}")
             if col2.button("❌", key=f"del_{p}"):
-                remove_player(p)
+                st.session_state.players.remove(p)
                 st.rerun()
     
     st.divider()
@@ -106,17 +117,15 @@ if st.session_state.game_state == 'setup':
 
 # PANTALLA B: EN JUEGO
 elif st.session_state.game_state == 'playing':
-    # NO hay st.title aquí para que todo suba
     player = st.session_state.players[st.session_state.current_idx]
-    
     st.caption(f"Jugadora {st.session_state.current_idx + 1} de {len(st.session_state.players)}")
     st.progress((st.session_state.current_idx + 1) / len(st.session_state.players))
     
     with st.container(border=True):
-        st.markdown(f"<h1 style='text-align: center; margin-top: -20px; color: #FF4B4B;'>{player}</h1>", unsafe_allow_html=True)
+        st.markdown(f"<h1 style='text-align: center; margin-top: -15px;'>{player}</h1>", unsafe_allow_html=True)
         
         if not st.session_state.show_role:
-            st.write("Pulsa para ver tu rol en secreto.")
+            st.write("Pulsa para revelar tu rol.")
             if st.button("👁️ Ver mi rol", use_container_width=True, type="primary"):
                 st.session_state.show_role = True
                 st.rerun()
@@ -125,7 +134,7 @@ elif st.session_state.game_state == 'playing':
                 st.markdown("""
                 <div style='border: 4px solid #FF4B4B; padding: 20px; border-radius: 15px; text-align: center; background-color: #FFF5F5;'>
                     <h1 style='color: #FF4B4B; margin: 0;'>🔴 IMPOSTORA</h1>
-                    <p style='color: #333; font-size: 1.1em;'>¡No dejes que te descubran!</p>
+                    <p style='color: #333;'>¡No dejes que te descubran!</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
@@ -134,7 +143,7 @@ elif st.session_state.game_state == 'playing':
                 <div style='border: 4px solid #28A745; padding: 15px; border-radius: 15px; text-align: center; background-color: #F5FFF5;'>
                     <h2 style='color: #28A745; margin: 0;'>👤 TRIPULANTE</h2>
                     <hr style='margin: 10px 0;'>
-                    <p style='color: #333; font-size: 1.2em; font-weight: bold;'>{ods['nombre']}</p>
+                    <p style='color: #333; font-size: 1.1em; font-weight: bold;'>{ods['nombre']}</p>
                     <div style='background-color: white; padding: 10px; border-radius: 10px; border: 1px solid #ddd;'>
                         <small style='color: #666;'>Ejemplo:</small><br>
                         <b style='color: #000; font-size: 1.3em;'>{ods['palabra']}</b>
@@ -155,7 +164,7 @@ elif st.session_state.game_state == 'playing':
 # PANTALLA C: FINALIZADO
 elif st.session_state.game_state == 'finished':
     st.balloons()
-    st.title("🕵️‍♀️ La ImpODStora")
+    st.markdown('<div class="titulo-container"><h1 class="titulo-centrado">🕵️‍♀️ La ImpODStora</h1><span class="emoji-subtitulo">👧</span></div>', unsafe_allow_html=True)
     st.success("### 📣 ¡Debate abierto!")
     
     if st.button("🔄 Nueva ronda", use_container_width=True, type="primary"):
