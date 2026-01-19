@@ -24,245 +24,79 @@ ODS_LIST = [
     {"id": 17, "nombre": "ODS 17: Alianzas", "palabra": "Equipo"}
 ]
 
-# Iconos y colores para avatares
-AVATAR_COLORS = ["#B5E7E0", "#FFB3D9", "#FFF4B3", "#D4C5F9", "#FFCBA4"]
-AVATAR_ICONS = ["🌱", "🔍", "⭐", "🌸", "🚀", "💡", "🎯", "✨"]
-
 # --- 2. CONFIGURACIÓN DE PÁGINA ---
-st.set_page_config(page_title="LA IMPODSTORA", page_icon="🕵️‍♀️", layout="centered")
+st.set_page_config(page_title="La impODStora", page_icon="🕵️‍♀️", layout="centered")
 
-# Estilos CSS modernos
+# Estilos CSS
 st.markdown("""
     <style>
-        /* Fondo gradiente */
-        .stApp {
-            background: linear-gradient(135deg, #FFE5F1 0%, #E5F5F5 50%, #F0E5FF 100%);
+        .block-container { padding-top: 1rem; }
+        .stButton>button { width: 100%; border-radius: 10px; height: 3em; font-weight: bold; }
+        .titulo { text-align: center; font-size: 2.5rem; font-weight: 800; margin-bottom: 0; }
+        .subtitulo { text-align: center; font-size: 1.2rem; color: #666; margin-bottom: 20px; }
+        
+        /* Tarjeta Impostora */
+        .card-red {
+            background-color: #FFEDED; border: 3px solid #FF4B4B; 
+            border-radius: 15px; padding: 20px; text-align: center; margin: 10px 0;
+            color: #333333; /* Forzamos color de texto oscuro */
         }
         
-        /* Header */
-        .main-header {
-            background: linear-gradient(90deg, #FF69B4, #FF1493);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
-            font-weight: 900;
-            text-align: center;
-            margin: 20px 0;
-            letter-spacing: 2px;
+        /* Tarjeta Tripulante */
+        .card-green {
+            background-color: #E8F5E9; border: 3px solid #2E7D32; 
+            border-radius: 15px; padding: 20px; text-align: center; margin: 10px 0;
+            color: #333333; /* Forzamos color de texto oscuro */
         }
         
-        .subtitle {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        /* Botones principales */
-        .stButton>button {
-            background: linear-gradient(135deg, #FF1493, #FF69B4);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 15px 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            width: 100%;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
-        }
-        
-        .stButton>button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
-        }
-        
-        /* Input personalizado */
-        .stTextInput>div>div>input {
-            border-radius: 20px;
-            border: 2px solid #FFB3D9;
-            padding: 15px;
-            font-size: 1rem;
-        }
-        
-        /* Cards de jugadores */
-        .player-card {
-            background: white;
-            border-radius: 20px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin: 10px 0;
-            position: relative;
-        }
-        
-        .player-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-        }
-        
-        .player-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #333;
-        }
-        
-        .remove-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #FFB3D9;
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        /* Counter badge */
-        .counter-badge {
-            background: #FF69B4;
-            color: white;
-            border-radius: 20px;
-            padding: 5px 15px;
-            display: inline-block;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        /* Tarjetas de rol */
-        .role-card-impostor {
-            background: linear-gradient(135deg, #FFE5E5, #FFCCCC);
-            border: 4px solid #FF4B4B;
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            box-shadow: 0 8px 20px rgba(255, 75, 75, 0.3);
-        }
-        
-        .role-card-crew {
-            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
-            border: 4px solid #4CAF50;
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
-        }
-        
-        .role-title {
-            font-size: 2rem;
-            font-weight: 900;
-            margin: 10px 0;
-        }
-        
-        .keyword-highlight {
-            background: white;
-            border: 3px dashed #4CAF50;
-            border-radius: 15px;
-            padding: 15px 25px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: inline-block;
-            margin: 15px 0;
-            color: #2E7D32;
-        }
-        
-        /* Debate card */
-        .debate-card {
-            background: linear-gradient(135deg, #FFF9C4, #FFF59D);
-            border: 4px solid #FBC02D;
-            border-radius: 25px;
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            box-shadow: 0 8px 20px rgba(251, 192, 45, 0.3);
-        }
-        
-        /* Reveal card */
-        .reveal-card {
-            background: linear-gradient(135deg, #E1BEE7, #CE93D8);
-            border: 4px dashed #9C27B0;
-            border-radius: 25px;
-            padding: 30px;
-            margin: 20px 0;
-            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.3);
-        }
-        
-        .impostor-name {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #C62828;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        /* Progress bar custom */
-        .stProgress > div > div > div {
-            background: linear-gradient(90deg, #FF69B4, #FF1493);
-        }
-        
-        /* Ajustes generales */
-        .block-container {
-            padding-top: 2rem;
-            max-width: 800px;
-        }
-        
-        /* Info boxes */
-        .stAlert {
-            border-radius: 15px;
+        .role-title { font-size: 1.8rem; font-weight: bold; margin: 0; }
+        .info-text { font-size: 1.2rem; margin: 10px 0; }
+        .keyword-box { 
+            background: white; padding: 10px; border-radius: 8px; 
+            border: 1px solid #ccc; display: inline-block; margin-top: 5px;
+            font-weight: bold; font-size: 1.4rem; color: black;
         }
     </style>
 """, unsafe_allow_html=True)
 
-# --- 3. GESTIÓN DE ESTADO ---
+# --- 3. GESTIÓN DE ESTADO (SESSION STATE) ---
+# Inicializamos TODAS las variables necesarias si no existen
 if 'game_active' not in st.session_state:
-    st.session_state.game_active = False
+    st.session_state.game_active = False # Para saber si estamos en partida
 if 'stage' not in st.session_state:
-    st.session_state.stage = 'setup'
+    st.session_state.stage = 'setup' # setup, playing, debate, reveal
 if 'players' not in st.session_state:
     st.session_state.players = []
-if 'player_avatars' not in st.session_state:
-    st.session_state.player_avatars = {}
 if 'impostor_name' not in st.session_state:
     st.session_state.impostor_name = "Nadie"
 if 'target_ods' not in st.session_state:
-    st.session_state.target_ods = {}
+    st.session_state.target_ods = {} # Diccionario vacío
 if 'turn_idx' not in st.session_state:
     st.session_state.turn_idx = 0
 if 'card_revealed' not in st.session_state:
     st.session_state.card_revealed = False
 
-# --- 4. FUNCIONES ---
-def get_random_avatar():
-    return {
-        'icon': random.choice(AVATAR_ICONS),
-        'color': random.choice(AVATAR_COLORS)
-    }
-
+# --- 4. FUNCIONES LÓGICAS ---
 def iniciar_partida():
     if len(st.session_state.players) < 3:
         st.error("Se necesitan mínimo 3 jugadores.")
         return
 
+    # 1. Mezclar jugadores
     lista_juego = st.session_state.players.copy()
     random.shuffle(lista_juego)
-    st.session_state.players = lista_juego
+    st.session_state.players = lista_juego # Guardamos el orden mezclado
     
+    # 2. Elegir índice de impostor
     idx_impostor = random.randint(0, len(lista_juego) - 1)
+    
+    # 3. GUARDAR EL NOMBRE DEL IMPOSTOR (Crucial)
     st.session_state.impostor_name = lista_juego[idx_impostor]
+    
+    # 4. Elegir ODS
     st.session_state.target_ods = random.choice(ODS_LIST)
     
+    # 5. Configurar estado
     st.session_state.turn_idx = 0
     st.session_state.card_revealed = False
     st.session_state.stage = 'playing'
@@ -270,126 +104,102 @@ def iniciar_partida():
 
 def reset_total():
     st.session_state.players = []
-    st.session_state.player_avatars = {}
     st.session_state.stage = 'setup'
     st.session_state.game_active = False
     st.rerun()
 
-# --- 5. INTERFAZ ---
+# --- 5. INTERFAZ DE USUARIO ---
 
 # Sidebar
 with st.sidebar:
-    st.title("⚙️ Opciones")
-    if st.button("🔄 Reiniciar Todo"):
+    st.title("Opciones")
+    if st.button("⚠️ Borrar todo y Reiniciar"):
         reset_total()
     
     st.divider()
-    st.write("**Escanea para jugar:**")
+    st.write("Juega escaneando:")
     url = "https://juego-impostora-ods-8lsdzkchk9wieczwmbgfcg.streamlit.app/"
     qr = qrcode.make(url)
     img_buffer = BytesIO()
     qr.save(img_buffer, format="PNG")
     st.image(img_buffer.getvalue())
 
-# Header
-st.markdown("<h1 class='main-header'>LA IMPODSTORA</h1>", unsafe_allow_html=True)
+# CABECERA COMÚN
+st.markdown("<h1 class='titulo'>La impODStora 🕵️‍♀️</h1>", unsafe_allow_html=True)
 
-# --- SETUP ---
+# --- FASE 1: CONFIGURACIÓN (SETUP) ---
 if st.session_state.stage == 'setup':
-    st.markdown("<p class='subtitle'>Añade a las jugadoras para comenzar la misión y salvar el planeta.</p>", unsafe_allow_html=True)
+    st.markdown("<p class='subtitulo'>Añade a los jugadores para empezar</p>", unsafe_allow_html=True)
     
-    # Formulario para agregar jugadores
-    st.markdown("### 🆕 NUEVA AGENTE")
-    col1, col2 = st.columns([4, 1])
-    with col1:
-        new_name = st.text_input("", placeholder="Escribe el nombre...", label_visibility="collapsed")
-    with col2:
-        if st.button("➕", key="add_btn"):
-            if new_name and new_name not in st.session_state.players:
+    with st.form("add_player"):
+        new_name = st.text_input("Nombre del jugador:")
+        col_btn1, col_btn2 = st.columns([1,1])
+        submitted = st.form_submit_button("Añadir")
+        
+        if submitted and new_name:
+            if new_name not in st.session_state.players:
                 st.session_state.players.append(new_name)
-                st.session_state.player_avatars[new_name] = get_random_avatar()
                 st.rerun()
-            elif new_name in st.session_state.players:
-                st.warning("Ya existe ese agente")
+            else:
+                st.warning("Ese nombre ya existe.")
 
     # Lista de jugadores
     if st.session_state.players:
-        st.markdown(f"### Tripulación Actual <span class='counter-badge'>{len(st.session_state.players)}/10 AGENTES</span>", unsafe_allow_html=True)
-        
+        st.write(f"**Jugadores ({len(st.session_state.players)}):**")
         cols = st.columns(3)
-        for idx, player in enumerate(st.session_state.players):
-            with cols[idx % 3]:
-                avatar = st.session_state.player_avatars.get(player, get_random_avatar())
-                st.markdown(f"""
-                <div class='player-card'>
-                    <div class='player-avatar' style='background-color: {avatar["color"]};'>
-                        {avatar["icon"]}
-                    </div>
-                    <div class='player-name'>{player}</div>
-                </div>
-                """, unsafe_allow_html=True)
-                if st.button("❌", key=f"remove_{idx}"):
-                    st.session_state.players.remove(player)
-                    st.session_state.player_avatars.pop(player, None)
-                    st.rerun()
+        for i, p in enumerate(st.session_state.players):
+            cols[i % 3].info(p)
 
-    st.write("")
-    st.markdown("*Minimum 3 players needed to start the mystery.*")
-    st.write("")
-    
-    if st.button("START GAME 🚀", type="primary", disabled=len(st.session_state.players) < 3):
+    st.divider()
+    if st.button("🚀 COMENZAR PARTIDA", type="primary", disabled=len(st.session_state.players) < 3):
         iniciar_partida()
         st.rerun()
 
-# --- PLAYING ---
+# --- FASE 2: JUEGO (PLAYING) ---
 elif st.session_state.stage == 'playing':
     current_player = st.session_state.players[st.session_state.turn_idx]
-    avatar = st.session_state.player_avatars.get(current_player, get_random_avatar())
     
-    st.markdown(f"<p class='subtitle'>Agent {st.session_state.turn_idx + 1} of {len(st.session_state.players)}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p class='subtitulo'>Turno {st.session_state.turn_idx + 1} de {len(st.session_state.players)}</p>", unsafe_allow_html=True)
     st.progress((st.session_state.turn_idx + 1) / len(st.session_state.players))
 
-    with st.container():
-        st.markdown(f"""
-        <div class='player-card' style='padding: 25px;'>
-            <div class='player-avatar' style='background-color: {avatar["color"]}; width: 100px; height: 100px; font-size: 3rem;'>
-                {avatar["icon"]}
-            </div>
-            <h2 style='margin: 15px 0;'>{current_player}</h2>
-            <p style='color: #666;'>Pass the device to this player. Nobody else should look.</p>
-        </div>
-        """, unsafe_allow_html=True)
+    # Caja principal
+    with st.container(border=True):
+        st.subheader(f"Le toca a: {current_player}")
+        st.info("Pasa el móvil a este jugador. Nadie más debe mirar.")
         
         if not st.session_state.card_revealed:
-            if st.button("👁️ TAP TO REVEAL ROLE", type="primary"):
+            if st.button("👁️ TOCAR PARA VER ROL"):
                 st.session_state.card_revealed = True
                 st.rerun()
         else:
+            # Lógica de visualización
             es_impostor = (current_player == st.session_state.impostor_name)
             
             if es_impostor:
                 st.markdown("""
-                <div class="role-card-impostor">
-                    <p class="role-title" style="color: #D32F2F;">🔴 YOU ARE THE IMPOSTOR</p>
-                    <p style="font-size: 1.2rem; margin: 15px 0;">You don't know the secret topic.</p>
-                    <p style="font-size: 1.1rem; color: #666;">Blend in and follow along!</p>
+                <div class="card-red">
+                    <p class="role-title" style="color:#D32F2F;">🔴 ERES LA IMPOSTORA</p>
+                    <p class="info-text">No conoces el tema.</p>
+                    <p>¡Disimula y sigue la corriente!</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
+                # Recuperamos datos del ODS seguro
                 nombre_ods = st.session_state.target_ods['nombre']
                 palabra_ods = st.session_state.target_ods['palabra']
                 
                 st.markdown(f"""
-                <div class="role-card-crew">
-                    <p class="role-title" style="color: #1B5E20;">👤 YOU ARE A CREW MEMBER</p>
-                    <p style="font-size: 1.2rem; margin: 15px 0;">The secret topic is:</p>
-                    <p style="font-size: 1.3rem; font-weight: bold; color: #2E7D32;">{nombre_ods}</p>
-                    <p style="font-size: 1.1rem; margin-top: 20px;">Your keyword:</p>
-                    <div class="keyword-highlight">{palabra_ods}</div>
+                <div class="card-green">
+                    <p class="role-title" style="color:#1B5E20;">👤 ERES TRIPULANTE</p>
+                    <p class="info-text">El tema secreto es:</p>
+                    <p><b>{nombre_ods}</b></p>
+                    <p>Tu palabra clave:</p>
+                    <div class="keyword-box">{palabra_ods}</div>
                 </div>
                 """, unsafe_allow_html=True)
 
-            if st.button("Hide and Continue ➡️", type="primary"):
+            # Botón siguiente
+            if st.button("Ocultar y Siguiente ➡️", type="primary"):
                 if st.session_state.turn_idx < len(st.session_state.players) - 1:
                     st.session_state.turn_idx += 1
                     st.session_state.card_revealed = False
@@ -398,50 +208,44 @@ elif st.session_state.stage == 'playing':
                     st.session_state.stage = 'debate'
                     st.rerun()
 
-# --- DEBATE ---
+# --- FASE 3: DEBATE ---
 elif st.session_state.stage == 'debate':
-    st.markdown("""
-    <div class="debate-card">
-        <h2 style="margin: 0; font-size: 2rem;">🗣️ TIME TO DEBATE</h2>
-        <p style="font-size: 1.2rem; margin: 20px 0;">Everyone has seen their role. Discuss and vote!</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown("<div class='card-green' style='background-color:#FFFDE7; border-color:#FBC02D;'>🗣️ <b>TIEMPO DE DEBATE</b><br>Todos han visto su rol. Discutid.</div>", unsafe_allow_html=True)
     
-    st.write("")
-    if st.button("🏁 END GAME & REVEAL IMPOSTOR", type="primary"):
+    st.write(" ")
+    st.write("Cuando hayáis votado quién es la impostora, pulsad el botón.")
+    
+    if st.button("🏁 TERMINAR PARTIDA Y VER RESULTADO", type="primary"):
         st.session_state.stage = 'reveal'
         st.rerun()
 
-# --- REVEAL ---
+# --- FASE 4: REVELACIÓN (REVEAL) ---
 elif st.session_state.stage == 'reveal':
     st.balloons()
     
     real_impostor = st.session_state.impostor_name
     real_ods_name = st.session_state.target_ods['nombre']
     real_ods_word = st.session_state.target_ods['palabra']
-    avatar = st.session_state.player_avatars.get(real_impostor, get_random_avatar())
 
     st.markdown(f"""
-    <div class="reveal-card">
-        <h2 style="color: #6A1B9A; margin: 0;">THE IMPOSTOR WAS:</h2>
-        <div class='player-avatar' style='background-color: {avatar["color"]}; width: 120px; height: 120px; font-size: 4rem; margin: 20px auto;'>
-            {avatar["icon"]}
-        </div>
-        <p class="impostor-name">{real_impostor}</p>
-        <hr style="border: 2px solid #9C27B0; margin: 20px 0;">
-        <div style="text-align: left; background: white; border-radius: 15px; padding: 20px; margin-top: 20px;">
-            <p style="font-size: 1.2rem; margin: 10px 0;"><b>🌍 Topic:</b> {real_ods_name}</p>
-            <p style="font-size: 1.2rem; margin: 10px 0;"><b>🔑 Keyword:</b> {real_ods_word}</p>
+    <div class="card-red" style="border-style: dashed;">
+        <h2 style='color: #D32F2F; margin:0;'>LA IMPOSTORA ERA:</h2>
+        <h1 style='font-size: 3rem; margin: 10px 0; color: #000;'>{real_impostor}</h1>
+        <hr>
+        <div style='text-align:left; margin-top:20px;'>
+            <p>🌍 <b>Tema:</b> {real_ods_name}</p>
+            <p>🔑 <b>Palabra:</b> {real_ods_word}</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
     
+    st.write("")
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("🔄 Play Again"):
+        if st.button("🔄 Jugar otra vez"):
             iniciar_partida()
             st.rerun()
     with col2:
-        if st.button("✏️ Change Players"):
+        if st.button("✏️ Cambiar jugadores"):
             st.session_state.stage = 'setup'
             st.rerun()
