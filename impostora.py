@@ -3,25 +3,25 @@ import random
 import qrcode
 from io import BytesIO
 
-# 1. LISTA COMPLETA DE ODS
+# 1. LISTA ACTUALIZADA DE ODS (Formato: Objetivo X: Nombre)
 ODS_LIST = [
-    {"id": 1, "nombre": "Fin de la Pobreza", "palabra": "Donación"},
-    {"id": 2, "nombre": "Hambre Cero", "palabra": "Agricultura"},
-    {"id": 3, "nombre": "Salud y Bienestar", "palabra": "Vacunas"},
-    {"id": 4, "nombre": "Educación de Calidad", "palabra": "Escuelas"},
-    {"id": 5, "nombre": "Igualdad de Género", "palabra": "Equidad"},
-    {"id": 6, "nombre": "Agua Limpia y Saneamiento", "palabra": "Grifo"},
-    {"id": 7, "nombre": "Energía Asequible", "palabra": "Solar"},
-    {"id": 8, "nombre": "Trabajo Decente", "palabra": "Empleo"},
-    {"id": 9, "nombre": "Industria e Innovación", "palabra": "Fábrica"},
-    {"id": 10, "nombre": "Reducción de Desigualdades", "palabra": "Inclusión"},
-    {"id": 11, "nombre": "Ciudades Sostenibles", "palabra": "Transporte"},
-    {"id": 12, "nombre": "Producción y Consumo Responsables", "palabra": "Reciclaje"},
-    {"id": 13, "nombre": "Acción por el Clima", "palabra": "Reforestación"},
-    {"id": 14, "nombre": "Vida Submarina", "palabra": "Coral"},
-    {"id": 15, "nombre": "Vida de Ecosistemas Terrestres", "palabra": "Bosque"},
-    {"id": 16, "nombre": "Paz, Justicia e Inst. Sólidas", "palabra": "Derechos"},
-    {"id": 17, "nombre": "Alianzas para lograr Objetivos", "palabra": "Unión"}
+    {"id": 1, "nombre": "Objetivo 1: Fin de la pobreza", "palabra": "Donación"},
+    {"id": 2, "nombre": "Objetivo 2: Hambre cero", "palabra": "Agricultura"},
+    {"id": 3, "nombre": "Objetivo 3: Salud y bienestar", "palabra": "Vacunas"},
+    {"id": 4, "nombre": "Objetivo 4: Educación de calidad", "palabra": "Escuelas"},
+    {"id": 5, "nombre": "Objetivo 5: Igualdad de género", "palabra": "Equidad"},
+    {"id": 6, "nombre": "Objetivo 6: Agua limpia y saneamiento", "palabra": "Grifo"},
+    {"id": 7, "nombre": "Objetivo 7: Energía asequible y no contaminante", "palabra": "Solar"},
+    {"id": 8, "nombre": "Objetivo 8: Trabajo decente y crecimiento económico", "palabra": "Empleo"},
+    {"id": 9, "nombre": "Objetivo 9: Industria, innovación e infraestructuras", "palabra": "Fábrica"},
+    {"id": 10, "nombre": "Objetivo 10: Reducción de las desigualdades", "palabra": "Inclusión"},
+    {"id": 11, "nombre": "Objetivo 11: Ciudades y comunidades sostenibles", "palabra": "Transporte"},
+    {"id": 12, "nombre": "Objetivo 12: Producción y consumo responsables", "palabra": "Reciclaje"},
+    {"id": 13, "nombre": "Objetivo 13: Acción por el clima", "palabra": "Reforestación"},
+    {"id": 14, "nombre": "Objetivo 14: Vida submarina", "palabra": "Coral"},
+    {"id": 15, "nombre": "Objetivo 15: Vida de ecosistemas terrestres", "palabra": "Bosque"},
+    {"id": 16, "nombre": "Objetivo 16: Paz, justicia e instituciones sólidas", "palabra": "Derechos"},
+    {"id": 17, "nombre": "Objetivo 17: Alianzas para lograr los objetivos", "palabra": "Unión"}
 ]
 
 # 2. CONFIGURACIÓN DE PÁGINA
@@ -153,7 +153,7 @@ elif st.session_state.game_state == 'finished':
     st.success("### 📣 ¡Todas han visto su rol!")
     st.write("Empezad el debate. Recordad que cada una debe decir una palabra relacionada con la ODS (la impostora tendrá que improvisar).")
     
-    if st.button("🔄 Jugar otra ronda (Mismas jugadoras)", use_container_width=True, type="primary"):
+    if st.button("🔄 Jugar otra ronda (mismas jugadoras)", use_container_width=True, type="primary"):
         start_new_round()
         st.rerun()
     
