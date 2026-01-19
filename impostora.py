@@ -75,7 +75,7 @@ with st.sidebar:
 
 # PANTALLA A: CONFIGURACIÓN
 if st.session_state.game_state == 'setup':
-    st.subheader("Añadir Jugadoras")
+#    st.subheader("Añadir jugadoras")
     
     with st.form("player_form", clear_on_submit=True):
         name = st.text_input("Nombre de la jugadora:")
@@ -109,8 +109,8 @@ elif st.session_state.game_state == 'playing':
     st.progress((st.session_state.current_idx + 1) / len(st.session_state.players))
     
     with st.container(border=True):
-        st.markdown(f"<h2 style='text-align: center; color: #FF4B4B;'>{player}</h2>", unsafe_allow_html=True)
-        st.write("Revisa el objetivo y, porfa, pasa el móvil.")
+#        st.markdown(f"<h2 style='text-align: center; color: #FF4B4B;'>{player}</h2>", unsafe_allow_html=True)
+#        st.write("Revisa el objetivo y, porfa, pasa el móvil.")
         
         if not st.session_state.show_role:
             if st.button("👁️ Ver mi rol", use_container_width=True, type="primary"):
@@ -138,7 +138,7 @@ elif st.session_state.game_state == 'playing':
                 """, unsafe_allow_html=True)
 
             st.write("")
-            if st.button("Siguiente jugador ➡️", use_container_width=True):
+            if st.button("Siguiente jugadora ➡️", use_container_width=True):
                 if st.session_state.current_idx < len(st.session_state.players) - 1:
                     st.session_state.current_idx += 1
                     st.session_state.show_role = False
